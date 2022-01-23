@@ -1,6 +1,8 @@
 """
 This is the main scheduler program
 """
+
+# inport calendar - has a lot of functions related to dates, days, years, basically calendar
 import datetime
 import copy
 
@@ -43,15 +45,15 @@ candidates = {"20bce1800":{"name":"Raghu", "course":"CSE", "year":2020},
             "20bce1804":{"name":"Gopal", "course":"ECE", "year":2022},
             "20bce1805":{"name":"Shivam", "course":"EEE", "year":2021}}
 
-# sorting raw data based on year of candidate
+# sorting raw data based on year of candidate - ascending
 candidates = dict(sorted(candidates.items(), key=lambda item: item[1]["year"]))
 
 # collecting basic info of interview schedule
 dur = int(input("Enter duration of 1 interview (in minutes): "))
 brk = int(input("Enter duration of break after 1 interview (in minutes): "))
 start_date = list(map(int,input("Enter starting day of interviews (DD:MM:YYYY): ").split(":")))
-start_time = list(map(int,input("Enter starting time of interviews everyday (HH:MM): ").split(":")))
-end_time = list(map(int,input("Enter ending time of interviews everyday (HH:MM): ").split(":")))
+start_time = list(map(int,input("Enter starting time of interviews everyday (HH:MM) (24 Hr Format): ").split(":")))
+end_time = list(map(int,input("Enter ending time of interviews everyday (HH:MM) (24 Hr Format): ").split(":")))
 now = datetime.datetime.now()
 
 schedule()
