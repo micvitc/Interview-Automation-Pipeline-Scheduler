@@ -4,35 +4,32 @@ This is the main scheduler program
 
 # inport calendar - has a lot of functions related to dates, days, years, basically calendar
 import datetime
-import copy
 
 # function to schedule interviews after collecting basic info
-def schedule():
-    int_date = copy.deepcopy(start_date)
-    int_time = copy.deepcopy(start_time)
+def schedule(dur, brk, start_date, start_time, end_time):
     for rollno in candidates.keys():
-        candidates[rollno]["date"] = ":".join([str(i) for i in int_date])
-        candidates[rollno]["start_time"] = ":".join([str(i) for i in int_time])
-        int_time[1] += dur
-        if (int_time[1] >= 60):
-            int_time[1] -= 60
-            int_time[0] += 1            
-        candidates[rollno]["end_time"] = ":".join([str(i) for i in int_time])
-        int_time[1] += brk
-        if (int_time[1] >= 60):
-            int_time[1] -= 60
-            int_time[0] += 1 
+        candidates[rollno]["date"] = ":".join([str(i) for i in start_date])
+        candidates[rollno]["start_time"] = ":".join([str(i) for i in start_time])
+        start_time[1] += dur
+        if (start_time[1] >= 60):
+            start_time[1] -= 60
+            start_time[0] += 1            
+        candidates[rollno]["end_time"] = ":".join([str(i) for i in start_time])
+        start_time[1] += brk
+        if (start_time[1] >= 60):
+            start_time[1] -= 60
+            start_time[0] += 1 
 
         # checking if end_time is breached
-        if (int_time[0] >= end_time[0]):
-            int_time = copy.deepcopy(start_time)
-            int_date[0] += 1
-            if (int_date[0] > 31):
-                int_date[0] = 1
-                int_date[1] += 1  
-                if (int_date[1] > 12):
-                    int_date[1] = 1
-                    int_date[2] += 1
+        if (start_time[0] >= end_time[0]):
+            start_time = copy.deepcopy(start_time)
+            start_date[0] += 1
+            if (start_date[0] > 31):
+                start_date[0] = 1
+                start_date[1] += 1  
+                if (start_date[1] > 12):
+                    start_date[1] = 1
+                    start_date[2] += 1
 
     # displaying scheduled timing
     for rollno in candidates.keys():
@@ -54,9 +51,9 @@ brk = int(input("Enter duration of break after 1 interview (in minutes): "))
 start_date = list(map(int,input("Enter starting day of interviews (DD:MM:YYYY): ").split(":")))
 start_time = list(map(int,input("Enter starting time of interviews everyday (HH:MM) (24 Hr Format): ").split(":")))
 end_time = list(map(int,input("Enter ending time of interviews everyday (HH:MM) (24 Hr Format): ").split(":")))
-now = datetime.datetime.now()
+# now = datetime.datetime.now()
 
-schedule()
+schedule(dur, brk, start_date, start_time, end_time)
 
 
 
