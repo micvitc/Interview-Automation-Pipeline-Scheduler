@@ -53,7 +53,7 @@ candidates = {"20bce1800":{"name":"Raghu", "course":"CSE", "year":2020},
 
 # sorting raw data based on year of candidate - ascending
 candidates = dict(sorted(candidates.items(), key=lambda item: item[1]["year"]))
-# dont think this is necessary as I will have to just scheduler in the order I get (in case rescheduled to create void etc)
+# wont be necessary as have to schedule in the order received (in case rescheduled to create void etc)
 # better to include sorting in front end itself
 
 '''
