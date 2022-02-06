@@ -2,10 +2,6 @@
 This is the main scheduler program
 """
 
-# inport calendar - has a lot of functions related to dates, days, years, basically calendar
-# import datetime;  now = datetime.datetime.now()
-# above 2 imports required only if validation is supposed to be done, else not required
-
 import copy
 
 # function to schedule interviews after collecting basic info
@@ -45,16 +41,13 @@ def scheduler(dur, brk, curr_date, start_time, end_time):
     return candidates
 
 # raw data got from backend
-candidates = {"20bce1800":{"name":"Raghu", "course":"CSE", "year":2020},
+candidates = {
+            "20bce1800":{"name":"Raghu", "course":"CSE", "year":2020},
             "20bce1802":{"name":"Arvind", "course":"MECH", "year":2020},
             "20bce1803":{"name":"Vaishnavi", "course":"CSE", "year":2021},
             "20bce1804":{"name":"Gopal", "course":"ECE", "year":2022},
-            "20bce1805":{"name":"Shivam", "course":"EEE", "year":2021}}
-
-# sorting raw data based on year of candidate - ascending
-candidates = dict(sorted(candidates.items(), key=lambda item: item[1]["year"]))
-# wont be necessary as have to schedule in the order received (in case rescheduled to create void etc)
-# better to include sorting in front end itself
+            "20bce1805":{"name":"Shivam", "course":"EEE", "year":2021}
+            }
 
 '''
 # function to collect basic info and call the scheduler from within this file
