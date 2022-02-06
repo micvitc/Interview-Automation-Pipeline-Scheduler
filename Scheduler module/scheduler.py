@@ -2,39 +2,27 @@
 This is the main scheduler program
 """
 
-import copy
+from datetime import datetime, timedelta, date, time
 
 # function to schedule interviews after collecting basic info
-def scheduler(dur, brk, curr_date, start_time, end_time):
-    curr_time = copy.deepcopy(start_time)
-    for rollno in candidates.keys():
-        candidates[rollno]["date"] = ":".join([str(i) for i in curr_date])
-        candidates[rollno]["start_time"] = ":".join([str(i) for i in curr_time])
-        curr_time[1] += dur
-        if (curr_time[1] >= 60):
-            curr_time[1] -= 60
-            curr_time[0] += 1            
-        candidates[rollno]["end_time"] = ":".join([str(i) for i in curr_time])
-        curr_time[1] += brk
-        if (curr_time[1] >= 60):
-            curr_time[1] -= 60
-            curr_time[0] += 1 
+def scheduler(duration, brk, currDate, startTime, endTime):
+    currTime = startTime
+    for rollNo in candidates.keys():
+        candidates[rollNo]["date"] = currDate.date()
+        candidates[rollNo]["startTime"] = currTime.time()
+        currTime += timedelta(minutes = duration)
+        candidates[rollNo]["endTime"] = currTime.time()
+        currTime += timedelta(minutes = brk)
 
-        # checking if end_time is breached
-        if (curr_time[0] >= end_time[0]):
-            curr_time = copy.deepcopy(start_time)
-            curr_date[0] += 1
-            if (curr_date[0] > 31):
-                curr_date[0] = 1
-                curr_date[1] += 1  
-                if (curr_date[1] > 12):
-                    curr_date[1] = 1
-                    curr_date[2] += 1
+        # checking if endTime is breached
+        if (currTime.hour >= endTime.hour):
+            currTime = startTime
+            currDate += timedelta(days = 1)
     
     '''
     # displaying scheduled timing
-    for rollno in candidates.keys():
-        print(candidates[rollno])
+    for rollNo in candidates.keys():
+        print(candidates[rollNo])
     '''
     
     # returning scheduled data
@@ -51,30 +39,30 @@ candidates = {
 
 '''
 # function to collect basic info and call the scheduler from within this file
-def call_scheduler():
+def callScheduler():
     # collecting basic info of interview schedule
-    dur = int(input("Enter duration of 1 interview (in minutes): "))
-    brk = int(input("Enter duration of break after 1 interview (in minutes): "))
-    start_date = list(map(int,input("Enter starting day of interviews (DD:MM:YYYY): ").split(":")))
-    start_time = list(map(int,input("Enter starting time of interviews everyday (HH:MM) (24 Hr Format): ").split(":")))
-    end_time = list(map(int,input("Enter ending time of interviews everyday (HH:MM) (24 Hr Format): ").split(":")))
+    duration = int(input("Enter durationation of 1 interview (in minutes): "))
+    brk = int(input("Enter durationation of break after 1 interview (in minutes): "))
+    startDate = datetime.fromisoformat(input("Enter starting day of interviews (YYYY-MM-DD): "))
+    startTime = datetime.combine(date(1,1,1), time.fromisoformat(input("Enter starting time of interviews everyday (HH:MM) (24 Hr Format): ")))
+    endTime = datetime.combine(date(1,1,1), time.fromisoformat(input("Enter ending time of interviews everyday (HH:MM) (24 Hr Format): ")))
 
     # calling scheduler
-    scheduler(dur, brk, start_date, start_time, end_time)
-call_scheduler()
+    scheduler(duration, brk, startDate, startTime, endTime)
+callScheduler()
 '''
 
-# function to collect basic info and call the scheduler from api.py
-def call_scheduler(dur, brk, st_dt, st_tm, end_tm):
+# function to collect basic info from api.py and call the scheduler 
+def callScheduler(duration, brk, startDate, startTime, endTime):
     # collecting basic info of interview schedule
-    dur = int(dur)
+    duration = int(duration)
     brk = int(brk)
-    start_date = list(map(int,st_dt.split(":")))
-    start_time = list(map(int,st_tm.split(":")))
-    end_time = list(map(int,end_tm.split(":")))
+    startDate = datetime.fromisoformat(startDate)
+    startTime = datetime.combine(date(1,1,1), time.fromisoformat(startTime))
+    endTime = datetime.combine(date(1,1,1), time.fromisoformat(endTime))
 
     # calling scheduler
-    return scheduler(dur, brk, start_date, start_time, end_time)
+    return scheduler(duration, brk, startDate, startTime, endTime)
 
 
 
