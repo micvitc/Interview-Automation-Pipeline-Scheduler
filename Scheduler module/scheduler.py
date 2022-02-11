@@ -2,14 +2,14 @@
 This is the main scheduler program
 """
 
-from datetime import datetime, timedelta, date, time
+from datetime import datetime, timedelta, date
 
 # function to schedule interviews after collecting basic info
 def scheduler(duration, brk, currDate, currTime, endTime):
     for id in input["ids"]:
         candidate = dict()
         candidate["id"] = id
-        candidate["date"] = currDate.date()
+        candidate["date"] = currDate
         candidate["startTime"] = currTime.time()
         currTime += timedelta(minutes = duration)
         candidate["endTime"] = currTime.time()
@@ -36,6 +36,7 @@ input = {
             "endTime": 0 
         }
 
+# output dictionary with scheduled data
 output = {
             "data": [],
             "length": 0
@@ -61,16 +62,19 @@ scheduler(input["duration"], input["brk"], input["startDate"], input["startTime"
 # function to collect basic info from api.py and call the scheduler 
 def callScheduler(duration, brk, startDate, startTime, endTime):
     # collecting basic info of interview schedule
-    input["duration"] = int(duration)
-    input["brk"] = int(brk)
-    input["startDate"] = datetime.fromisoformat(startDate)
-    input["startTime"] = datetime.combine(date(1,1,1), time.fromisoformat(startTime))
-    input["endTime"] = datetime.combine(date(1,1,1), time.fromisoformat(endTime))
+    input["duration"] = duration
+    input["brk"] = brk
+    input["startDate"] = startDate
+    input["startTime"] = datetime.combine(date(1,1,1), startTime)
+    input["endTime"] = datetime.combine(date(1,1,1), endTime)
+
+    # resetting previously scheduled data on every call
+    output["data"] = []
 
     # calling scheduler
     return scheduler(input["duration"], input["brk"], input["startDate"], input["startTime"], input["endTime"])
 
 # datetime object is used even for just date and time bcoz 
-# timedelta fn can be used only on datetime objects, 
-# but while returning, datetime is converted to 
-# date & time objects separately and returned
+# timedelta fn can be used only on datetime & date objects 
+# and not time objects but while returning, datetime is converted to 
+# time object separately and returned
