@@ -21,6 +21,12 @@ class Items(BaseModel):
     data: List[Item]
     length: int
 
+
+@schedulerApp.get("/")
+async def test() :
+    return "Scheduler API is working"
+
+
 @schedulerApp.get("/schedule/duration={duration}_break={brk}_start-date={startDate}_start-time={startTime}_end-time={endTime}", response_model=Items)
 async def getSchedule(duration: int, brk: int, startDate: date, startTime: time, endTime: time):
     return sch.callScheduler(duration, brk, startDate, startTime, endTime)
