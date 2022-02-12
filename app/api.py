@@ -1,21 +1,18 @@
 from datetime import date, time
-from typing import List
-
+from dotenv import dotenv_values
 from fastapi import FastAPI
-from pydantic import BaseModel
-import scheduler as sch
 
+from app.modules.scheduler import scheduler as sch
+from app.models import Items
+
+values = dotenv_values(".env")
 schedulerApp = FastAPI()
 
-class Item(BaseModel):
-    id: str
-    date: date
-    startTime: time
-    endTime: time
 
-class Items(BaseModel):
-    data: List[Item]
-    length: int
+@schedulerApp.get("/")
+async def test() :
+    return "Scheduler API is working"
+
 
 @schedulerApp.get("/schedule/duration={duration}_break={brk}_start-date={startDate}_start-time={startTime}_end-time={endTime}", response_model=Items)
 async def getSchedule(duration: int, brk: int, startDate: date, startTime: time, endTime: time):
