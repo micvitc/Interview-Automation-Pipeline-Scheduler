@@ -3,7 +3,11 @@ from typing import List
 
 from fastapi import FastAPI
 from pydantic import BaseModel
-import scheduler as sch
+import app.modules.scheduler.scheduler as sch
+
+from dotenv import dotenv_values
+
+print(dotenv_values(".env"))
 
 schedulerApp = FastAPI()
 
