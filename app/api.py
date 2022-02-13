@@ -9,7 +9,6 @@ from app.modules.collector.collect import Colletor
 values = dotenv_values(".env")
 schedulerApp = FastAPI()
 
-print(values)
 
 @schedulerApp.get("/")
 async def test() :
@@ -23,6 +22,8 @@ async def getSchedule(duration: int, brk: int, startDate: date, startTime: time,
 
 @schedulerApp.get("/testCollector")
 async def testCollector():
-    c = Colletor()
+    c = Colletor(values['url'], values['list'], values['email'], values['pass'])
+    res = c.collect()
+    return res
 
 # example - http://127.0.0.1:8000/schedule/duration=17_break=5_start-date=2022-01-25_start-time=17:00_end-time=18:00

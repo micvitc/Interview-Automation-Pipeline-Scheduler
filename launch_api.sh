@@ -1,1 +1,1 @@
-uvicorn app.api:schedulerApp
+python -m uvicorn app.api:schedulerApp
