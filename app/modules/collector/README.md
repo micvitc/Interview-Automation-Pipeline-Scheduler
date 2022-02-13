@@ -7,8 +7,9 @@ Create a MS Form and a Sharepoint List with enough columns as the form's questio
 
 ![setup](./Demo/setup.jpeg)
 # Flow Creation
-1. Log into  [powerapps](https://www.office.com/) and navigate to My Flows , Now click on Start from Automated flow (from blank) with a trigger _When a new response is submitted_  _(Microsoft Forms)_.
+1. Log into  [Power Automate](https://us.flow.microsoft.com/en-us/) and navigate to My Flows , Now click on Start from Automated flow (from blank) with a trigger _When a new response is submitted_  _(Microsoft Forms)_.
 ![image1](./Demo/image-1.png)
+![image1](./Demo/image-4.jpeg)
 2. Select your form in the _Form Id_ field (flow will run if new response for this form is submitted). Add the _Get response details (Microsoft Forms)_ action (to collect data from the submitted form).
 ![image2](./Demo/image-2.png)
 3. Add _Create item (SharePoint)_ action, to create the new item for the submitted response in the list you prepared.
@@ -27,10 +28,11 @@ Create a MS Form and a Sharepoint List with enough columns as the form's questio
 
 ![Output](./Demo/Output.jpeg)
 # Todo List
- - [ ] Markdown Doc
  - [ ] Implementing env based hiding for username and password
 
 # Further Reading and References
+## Note: Most of these articles are based on power apps which was later moved to power automate only a few minor changes have been made but the basic premise and working is still the same
+
 -https://www.youtube.com/watch?v=Z162zqSxz4c&ab_channel=LernenTech
 
 -https://techwizard.cloud/2020/09/30/get-list-items-sharepoint-online-using-python/
